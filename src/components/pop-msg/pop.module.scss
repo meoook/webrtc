@@ -1,0 +1,90 @@
+$texth: #fff;
+$indent: 8px;
+
+.msg {
+  @keyframes msgRunProgress {
+    0% {
+      width: 0%;
+      background-color: rgba($texth, 0.3);
+    }
+    100% {
+      width: 100%;
+      background-color: rgba($texth, 1);
+    }
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    99% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  &frame {
+    position: fixed;
+    top: $indent * 8;
+    right: 0;
+    z-index: 5;
+    width: $indent * 50;
+  }
+  &progress {
+    position: absolute;
+    bottom: 2px;
+    left: $indent * 1.8;
+    border-radius: $indent / 4;
+    width: 0;
+    max-width: $indent * 43;
+    height: $indent / 2;
+    background-color: rgba($texth, 0.9);
+  }
+  &item {
+    display: flex;
+    align-items: center;
+    min-height: $indent * 8;
+    position: relative;
+    margin: $indent * 2;
+    padding: $indent $indent $indent/1.5;
+    color: var(--color-primary);
+    border-radius: $indent;
+    & svg {
+      fill: $texth;
+      width: 26px;
+      height: 26px;
+    }
+    & .context {
+      padding: 0 $indent/ 2;
+    }
+    &.fade {
+      animation: fadeOut 3.8s linear forwards;
+      .msgprogress {
+        animation: msgRunProgress 3.5s linear forwards 0.5s;
+      }
+    }
+    &.default {
+      background-color: var(--color-msg-default);
+    }
+    &.info {
+      background-color: var(--color-msg-info);
+    }
+    &.success {
+      background-color: var(--color-msg-success);
+    }
+    &.warning {
+      background-color: var(--color-msg-warning);
+    }
+    &.error {
+      background-color: var(--color-msg-error);
+    }
+  }
+}

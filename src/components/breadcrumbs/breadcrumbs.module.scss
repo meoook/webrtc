@@ -1,0 +1,22 @@
+.breadcrumbs {
+  display: flex;
+  color: var(--color-primary);
+  flex-direction: row;
+  white-space: nowrap;
+  font-weight: var(--text-weight, 600);
+  font-size: var(--font-size-h2) !important;
+  .divider {
+    padding: 0 16px;
+    @media screen and (max-width: 480px) {
+      & {
+        padding: 0 4px;
+      }
+    }
+  }
+  a {
+    color: var(--color-brand);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

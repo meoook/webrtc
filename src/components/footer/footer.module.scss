@@ -1,0 +1,40 @@
+.footer {
+  box-sizing: border-box;
+  white-space: nowrap;
+  background-color: var(--color-head);
+  hr {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+}
+
+.content {
+  box-sizing: border-box;
+  width: 960px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  @media screen and (max-width: 968px) {
+    & {
+      width: 100%;
+      padding-bottom: 80px;
+    }
+    & > div {
+      flex-direction: column;
+    }
+  }
+}
+
+.head {
+  margin-top: var(--padding);
+  text-transform: uppercase;
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+  & > div {
+    margin-right: 16px;
+  }
+}

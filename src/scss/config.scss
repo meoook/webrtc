@@ -1,0 +1,231 @@
+:root {
+  // new colors
+  // --colors-white: #fff;
+  // --colors-failure: #ed4b9e;
+  // --colors-failure33: #ed4b9e33;
+  // --colors-primary: #1fc7d4;
+  // --colors-primary0f: #1fc7d40f;
+  // --colors-primary3D: #1fc7d43d;
+  // --colors-primaryBright: #53dee9;
+  // --colors-primaryDark: #0098a1;
+  // --colors-success: #31d0aa;
+  // --colors-success19: #31d0aa19;
+  // --colors-warning: #ffb237;
+  // --colors-warning2D: #ed4b9e2d;
+  // --colors-warning33: #ed4b9e33;
+  // --colors-binance: #f0b90b;
+  // --colors-overlay: #452a7a;
+  // --colors-gold: #ffc700;
+  // --colors-silver: #b2b2b2;
+  // --colors-bronze: #e7974d;
+  // --colors-yellow: #d67e0a;
+  // --colors-secondary: #a881fc;
+  // --colors-secondary80: #a881fc80;
+  // --colors-background: #08060b;
+  // --colors-backgroundDisabled: #3c3742;
+  // --colors-backgroundAlt: #27262c;
+  // --colors-backgroundAlt2: #27262cb3;
+  // --colors-cardBorder: #383241;
+  // --colors-dropdown: #1e1d20;
+  // --colors-dropdownDeep: #100c18;
+  // --colors-invertedContrast: #191326;
+  // --colors-input: #372f47;
+  // --colors-inputSecondary: #262130;
+  // --colors-tertiary: #353547;
+  // --colors-text: #f4eeff;
+  // --colors-text99: #f4eeff99;
+  // --colors-textDisabled: #666171;
+  // --colors-textSubtle: #b8add2;
+  // --colors-disabled: #524b63;
+
+  // --shadows-level1: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  // --shadows-active: 0px 0px 0px 1px #0098a1, 0px 0px 4px 8px rgba(31, 199, 212, 0.4);
+  // --shadows-success: 0px 0px 0px 1px #31d0aa, 0px 0px 0px 4px rgba(49, 208, 170, 0.2);
+  // --shadows-warning: 0px 0px 0px 1px #d67e0a, 0px 0px 0px 4px rgba(214, 126, 10, 0.2);
+  // --shadows-danger: 0px 0px 0px 1px #ed4b9e, 0px 0px 0px 4px rgba(237, 75, 158, 0.2);
+  // --shadows-focus: 0px 0px 0px 1px #7645d9, 0px 0px 0px 4px rgba(118, 69, 217, 0.6);
+  // --shadows-inset: inset 0px 2px 2px -1px rgba(74, 74, 104, 0.1);
+  // --shadows-tooltip: 0px 0px 2px rgba(0, 0, 0, 0.2), 0px 4px 12px -8px rgba(14, 14, 44, 0.1);
+
+  --color-primary: #fff;
+  // --color-fg-default: #fff;
+  --color-secondary: #99a;
+  --color-canvas-default: #1d1d23;
+  --color-body: #1d1d23; // 1c1f24
+  --color-dialog: #202029;
+  --color-head: #23232b;
+
+  --color-input: #282831;
+  --color-active: #2c2c35;
+
+  --color-shadow: #2222;
+  --color-border: #434a56; // #464e5a
+  --color-disabled: #505059;
+
+  --color-brand: #7545d2;
+  // MSG COLORS
+  --color-msg-default: #007bff;
+  --color-msg-info: #17a2b8;
+  --color-msg-success: #28a745;
+  --color-msg-warning: #ce9c09; //#eab000;
+  --color-msg-error: #dc3545;
+  // Sizes
+  --font-size: 16px;
+  --padding: 8px;
+  --radius: 8px;
+  --font-size-h1: 24px;
+  --font-size-h2: 20px;
+  --base-size-4: 4px;
+  --base-size-8: 8px;
+  --base-size-16: 16px;
+  --size-checkbox: 24px;
+  // Other
+  --text-weight: 600;
+  --timer: 0.9s;
+}
+
+// Gray Scale
+$texth: #ffffff;
+$text: #909099;
+$textd: #505059;
+
+$active: #2c2c35;
+$input: #282831;
+
+$footer: #25252e;
+
+$elem: #23232b;
+$menu: #202029;
+
+$shadow: #101019;
+
+// App colors
+$t-help: #9bdc8b;
+
+$brand: #7545e2; // #90caf9
+$success: #63c84a;
+$error: #f63868;
+$warning: #f19037;
+$info: #48c7d5;
+
+// App vals
+$timer: 0.9s;
+// Sizing
+$font-size: 1rem;
+$indent: 0.25rem;
+$padding: 10px;
+$radius: 6px;
+$bd: 1px;
+$in-w: 300px;
+// Media (from small to xl)
+$res-s: 600px;
+$res-m: 768px;
+$res-l: 992px;
+$res-xl: 1200px;
+
+// mixins
+%absolute {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  content: '';
+}
+
+%bd {
+  border: $bd solid rgba($texth, 0.15);
+  border-radius: $radius;
+}
+
+%shadow {
+  box-shadow: 0 2px 4px var(--color-shadow) !important;
+}
+%shadow-light {
+  box-shadow: 2px 4px 6px rgba($shadow, 0.2);
+}
+%shadow-light-text {
+  text-shadow: 0px 0px 6px rgba($shadow, 0.2);
+}
+
+%disabled-cfg {
+  // cursor: initial !important;
+  pointer-events: none;
+  cursor: not-allowed !important;
+  transform: none !important;
+  color: var(--color-secondary) !important;
+  background-color: transparent !important;
+  // & svg {
+  //   fill: var(--color-secondary) !important;
+  // }
+}
+%disabled-bg {
+  background-size: 100px 100px !important;
+  background-image: linear-gradient(
+    45deg,
+    var(--color-input) 25%,
+    transparent 25%,
+    transparent 50%,
+    var(--color-input) 50%,
+    var(--color-input) 75%,
+    transparent 75%,
+    transparent
+  ) !important;
+}
+
+%disabled {
+  @extend %disabled-cfg;
+  @extend %disabled-bg;
+}
+
+// @extend %absolute;
+
+// @include shadow();
+
+@mixin color($color: $texth, $bd: false, $bg: false, $hover: false) {
+  color: $color;
+  @if $bd {
+    border-color: $color;
+    outline-color: $color;
+  }
+  @if $bg {
+    background: darken($color, 6%);
+    @if $hover {
+      &:hover {
+        background: darken($color, 5%);
+      }
+    }
+  }
+}
+
+@mixin colors($color, $hover: false) {
+  background: $color;
+  color: lighten($color, 30%);
+  border-color: lighten($color, 10%);
+  @if $hover {
+    &:hover {
+      background: lighten($color, 6%);
+    }
+  }
+  &:active {
+    background: darken($color, 1%);
+  }
+}
+
+@mixin colors-all {
+  &-brand {
+    @include colors($brand, true);
+  }
+  &-success {
+    @include colors($success, true);
+  }
+  &-info {
+    @include colors($info, true);
+  }
+  &-warning {
+    @include colors($warning, true);
+  }
+  &-error {
+    @include colors($error, true);
+  }
+}
