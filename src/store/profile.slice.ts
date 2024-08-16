@@ -15,11 +15,6 @@ const initialState: IProfileState = {
   messages: [],
 }
 
-// const getNextId = (messages: IPopup[]) => {
-//   if (messages.length === 0) return 0
-//   else return messages[messages.length - 1].id + 1
-// }
-
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,

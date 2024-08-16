@@ -1,12 +1,14 @@
 import Banner from '../components/banner'
+import Footer from '../components/footer'
+import Container from '../elements/container'
 
-interface PageHomeProps {
-  children?: React.ReactNode
-}
-export default function PageHome(props: PageHomeProps) {
+export default function PageHome() {
   return (
     <>
-      <Banner title={`Multi chat rulet`} subtitle='Watch online streams for your favorite bloger' />
+      <Container>
+        <Banner title={`Multi chat rulet`} subtitle='Watch online streams for your favorite bloger' />
+      </Container>
+      <Footer />
     </>
   )
 }

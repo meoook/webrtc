@@ -11,19 +11,15 @@ export default function Footer({ children }: FotterProps) {
         <div className='row justify'>
           <div className='column'>
             <div className={style.head}>ECOSYSTEM</div>
+            <div>Streaming</div>
             <div>Blog</div>
-            <div>Trade</div>
-            <div>Earn</div>
-            <div>Game</div>
-            <div>NFT</div>
-            <div>Tokenomics</div>
-            <div>Emission</div>
+            <div>Donate</div>
+            <div>Restream</div>
           </div>
           <div className='column'>
             <div className={style.head}>BUSINESS</div>
-            <div>Farms And Syrup Pools</div>
-            <div>IFO</div>
-            <div>NFT Marketplace</div>
+            <div>ICO</div>
+            <div>Partrnership</div>
           </div>
           <div className='column'>
             <div className={style.head}>DEVELOPERS</div>

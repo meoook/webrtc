@@ -1,0 +1,10 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+  // overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

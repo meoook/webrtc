@@ -154,3 +154,9 @@ export interface Web3Message {
   chainId: number
   timeout: number
 }
+
+export type WebRTCUser = {
+  id: string
+  email: string
+  stream: MediaStream
+}

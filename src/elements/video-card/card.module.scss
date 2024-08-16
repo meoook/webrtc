@@ -1,0 +1,23 @@
+.card {
+  box-sizing: border-box;
+  width: 220px;
+  height: 128px;
+  background-color: var(--color-dialog);
+  padding: 32px;
+  box-shadow: #ff83187a 0px 0px 5px 3px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-image: url('../../svg/card.svg');
+  background-size: cover;
+  background-position: center; // left bottom
+  background-repeat: no-repeat;
+}
+
+.border {
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0px 4px var(--color-border) !important;
+}
+
+.nopadding {
+  padding: 0px;
+}

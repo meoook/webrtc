@@ -45,6 +45,20 @@ const IcoBots = () => (
   </svg>
 )
 
+const IcoCamera = () => (
+  <svg {...svgProps}>
+    <path d='M0 0h24v24H0V0z' fill='none' />
+    <path d='M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z' />
+  </svg>
+)
+
+const IcoCameraOff = () => (
+  <svg {...svgProps}>
+    <path d='M0 0h24v24H0V0z' fill='none' />
+    <path d='M9.56 8l-2-2-4.15-4.14L2 3.27 4.73 6H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.21 0 .39-.08.55-.18L19.73 21l1.41-1.41-8.86-8.86L9.56 8zM5 16V8h1.73l8 8H5zm10-8v2.61l6 6V6.5l-4 4V7c0-.55-.45-1-1-1h-5.61l2 2H15z' />
+  </svg>
+)
+
 const IcoCaution = () => (
   <svg {...svgProps}>
     <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z' />
@@ -203,6 +217,20 @@ const IcoMetamask = () => (
       d='M22.1205 21.3276L22.6009 13.2843L24.701 7.56067H15.2988L17.3988 13.2843L17.8792 21.3276L18.0577 23.8531L18.0714 30.0984H21.9283L21.9421 23.8531L22.1205 21.3276Z'
       fill='#F5841F'
     />
+  </svg>
+)
+
+const IcoMic = () => (
+  <svg {...svgProps}>
+    <path d='M12,14c1.66,0,3-1.34,3-3V5c0-1.66-1.34-3-3-3S9,3.34,9,5v6C9,12.66,10.34,14,12,14z' />
+    <path d='M17,11c0,2.76-2.24,5-5,5s-5-2.24-5-5H5c0,3.53,2.61,6.43,6,6.92V21h2v-3.08c3.39-0.49,6-3.39,6-6.92H17z' />
+  </svg>
+)
+
+const IcoMicOff = () => (
+  <svg {...svgProps}>
+    <path d='M0 0h24v24H0V0z' fill='none' />
+    <path d='M10.8 4.9c0-.66.54-1.2 1.2-1.2s1.2.54 1.2 1.2l-.01 3.91L15 10.6V5c0-1.66-1.34-3-3-3-1.54 0-2.79 1.16-2.96 2.65l1.76 1.76V4.9zM19 11h-1.7c0 .58-.1 1.13-.27 1.64l1.27 1.27c.44-.88.7-1.87.7-2.91zM4.41 2.86L3 4.27l6 6V11c0 1.66 1.34 3 3 3 .23 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.55-.9l4.2 4.2 1.41-1.41L4.41 2.86z' />
   </svg>
 )
 
@@ -511,6 +539,8 @@ const iconArray: { [key: string]: JSX.Element } = {
   apartment: <IcoApartment />,
   backup: <IcoBackUp />,
   bots: <IcoBots />,
+  camera: <IcoCamera />,
+  camera_off: <IcoCameraOff />,
   caution: <IcoCaution />,
   close: <IcoClose />,
   check: <IcoCheck />,
@@ -526,6 +556,8 @@ const iconArray: { [key: string]: JSX.Element } = {
   logout2: <IcoLogout2 />,
   menu: <IcoMenu />,
   metamask: <IcoMetamask />,
+  mic: <IcoMic />,
+  mic_off: <IcoMicOff />,
   money: <IcoMoney />,
   more: <IcoMore />,
   moon: <IcoMoon />,
