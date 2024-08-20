@@ -1,5 +1,4 @@
 import { StylesConfig } from 'react-select'
-import { IBot, IBotChange } from './model'
 
 export const selectStyle: StylesConfig = {
   control: (styles, { isDisabled }) => ({
@@ -27,17 +26,4 @@ export const selectStyle: StylesConfig = {
     }
   },
   placeholder: (styles) => ({ ...styles, color: 'var(--color-secondary)' }),
-}
-
-export const mutateBotCfg = (full: IBot): IBotChange => {
-  return {
-    timeframe: full.timeframe,
-    name: full.name,
-    active: full.active,
-    next_month: full.next_month,
-    balance_limit: full.balance_limit,
-    circles_limit: full.circles_limit,
-    orders_limit: full.orders_limit,
-    delta: full.delta,
-  }
 }

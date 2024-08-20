@@ -1,0 +1,8 @@
+// APP: UI ELEMS
+export const POPUP_MESSAGE_ADD = 'POPUP_MESSAGE_ADD'
+export const POPUP_MESSAGE_DELETE = 'POPUP_MESSAGE_DELETE'
+// USER
+export const USER_LOADING = 'USER_LOADING'
+export const USER_SET = 'USER_SET'
+export const USER_TOKEN = 'USER_TOKEN'
+export const USER_LOGOUT = 'USER_LOGOUT'

@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import io, { Socket } from 'socket.io-client'
 import iconArray from '../../elements/ico-get/icons'
 import style from './room.module.scss'
@@ -15,23 +15,43 @@ const pc_config = {
     // {
     //   urls: 'stun:stun.l.google.com:19302',
     // },
+    // {
+    //   urls: 'stun:93.186.66.134:5349',
+    // },
     {
-      urls: 'stun:93.186.66.134:5349',
+      urls: 'turn:45.84.197.118:5349',
+      credential: 'test',
+      username: 'test',
     },
   ],
 }
+
+const MEDIA_CONSTRAINTS = {
+  audio: true,
+  video: {
+    // deviceId: {exact: myExactCameraOrBustDeviceId},
+    // deviceId: myPreferredCameraDeviceId,
+    frameRate: { ideal: 10, max: 15 },
+    facingMode: true ? 'user' : 'environment', // front/back camera
+    width: {min: 640, ideal: 1280, max: 1920},
+    height: {min: 480, ideal: 720, max: 1080}
+  },
+}
+
 const SOCKET_SERVER_URL = 'http://192.168.1.43:8080'
 
 interface RoomProps {
-  id: string
+  room_id: string
 }
 
-export default function Room({ id }: RoomProps) {
+export default function Room({ room_id }: RoomProps) {
   const socketRef = useRef<Socket>()
   const pcsRef = useRef<{ [socketId: string]: RTCPeerConnection }>({})
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const localStreamRef = useRef<MediaStream>()
   const [users, setUsers] = useState<WebRTCUser[]>([])
+  const [micOn, setMicOn] = useState<boolean>(true)
+  const [cameraOn, setCameraOn] = useState<boolean>(true)
 
   const getLocalStream = useCallback(async () => {
     try {
@@ -42,13 +62,15 @@ export default function Room({ id }: RoomProps) {
       localStreamRef.current = localStream
       if (localVideoRef.current) localVideoRef.current.srcObject = localStream
       if (!socketRef.current) return
-      socketRef.current.emit('join_room', { room: id, email: 'sample@naver.com' })
+      socketRef.current.emit('join_room', { room: room_id, email: 'sample@naver.com' })
     } catch (e) {
       console.log(`getUserMedia error: ${e}`)
     }
-  }, [])
+  }, [room_id])
 
   const createPeerConnection = useCallback((socketID: string, email: string) => {
+    console.log('Create new RTCPeerConnection')
+
     try {
       const pc = new RTCPeerConnection(pc_config)
 
@@ -63,11 +85,11 @@ export default function Room({ id }: RoomProps) {
       }
 
       pc.oniceconnectionstatechange = (e) => {
-        console.log(e)
+        console.log('Connection changed', e)
       }
 
       pc.ontrack = (e) => {
-        console.log('ontrack success')
+        console.log('ontrack success', e)
         setUsers((oldUsers) =>
           oldUsers
             .filter((user) => user.id !== socketID)
@@ -82,6 +104,9 @@ export default function Room({ id }: RoomProps) {
       if (localStreamRef.current) {
         console.log('localstream add')
         localStreamRef.current.getTracks().forEach((track) => {
+          console.log('Track', track)
+          console.log('localStreamRef', localStreamRef.current)
+
           if (!localStreamRef.current) return
           pc.addTrack(track, localStreamRef.current)
         })
@@ -103,13 +128,12 @@ export default function Room({ id }: RoomProps) {
       allUsers.forEach(async (user) => {
         if (!localStreamRef.current) return
         const pc = createPeerConnection(user.id, user.email)
-        if (!(pc && socketRef.current)) return
+        if (!pc || !socketRef.current) return
         pcsRef.current = { ...pcsRef.current, [user.id]: pc }
         try {
           const localSdp = await pc.createOffer({
             offerToReceiveAudio: true,
             offerToReceiveVideo: true,
-          })
           console.log('create offer success')
           await pc.setLocalDescription(new RTCSessionDescription(localSdp))
           socketRef.current.emit('offer', {
@@ -131,7 +155,7 @@ export default function Room({ id }: RoomProps) {
         console.log('get offer')
         if (!localStreamRef.current) return
         const pc = createPeerConnection(offerSendID, offerSendEmail)
-        if (!(pc && socketRef.current)) return
+        if (!pc || !socketRef.current) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
         try {
           await pc.setRemoteDescription(new RTCSessionDescription(sdp))
@@ -195,6 +219,24 @@ export default function Room({ id }: RoomProps) {
     }
   }
 
+  const toggleMic = () => {
+    setMicOn((_) => {
+      if (!localStreamRef.current) return false
+      const enabled = localStreamRef.current?.getAudioTracks()[0].enabled
+      localStreamRef.current.getAudioTracks()[0].enabled = !enabled
+      return !enabled
+    })
+  }
+  const toggleVideo = () => {
+    setCameraOn((_) => {
+      if (!localStreamRef.current) return false
+      const enabled = localStreamRef.current?.getVideoTracks()[0].enabled
+      localStreamRef.current.getVideoTracks()[0].enabled = !enabled
+      // localStreamRef.current.getVideoTracks()[0].stop()
+      return !enabled
+    })
+  }
+
   return (
     <div className={style.room}>
       <div className={style.main}>
@@ -205,14 +247,16 @@ export default function Room({ id }: RoomProps) {
           ))}
         </div>
         <div className={style.options}>
-          <button className={style.option}>{iconArray.camera}</button>
-          <button className={style.option}>{iconArray.camera_off}</button>
-          <button className={style.option}>{iconArray.mic}</button>
-          <button className={style.option}>{iconArray.mic_off}</button>
+          <button className={style.option} onClick={toggleVideo}>
+            {cameraOn ? iconArray.camera : iconArray.camera_off}
+          </button>
+          <button className={style.option} onClick={toggleMic}>
+            {micOn ? iconArray.mic : iconArray.mic_off}
+          </button>
         </div>
       </div>
       <div className={style.menu}>
-        <div className={style.chat}>{id}</div>
+        <div className={style.chat}>{room_id}</div>
         <div className={style.options}>
           <input className={style.input} onKeyDown={handleInputKey} />
           <button className={style.option}>{iconArray.add_o}</button>

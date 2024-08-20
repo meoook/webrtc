@@ -1,10 +1,7 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../store/hooks'
-import { setToken } from '../store/profile.slice'
 import InputTextField from '../elements/input-field'
 
 export default function PageLogin() {
-  const dispatch = useAppDispatch()
   const [auth, setAuth] = useState({ name: '' })
   const [disabled, setDisabled] = useState(false)
 
@@ -12,7 +9,6 @@ export default function PageLogin() {
 
   const handleLogin = () => {
     setDisabled(true)
-    dispatch(setToken(auth.name))
   }
 
   return (

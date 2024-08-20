@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAppSelector } from './store/hooks'
 import PageHome from './pages/PageHome'
 import PageLogin from './pages/PageLogin'
 import PageRoom from './pages/PageRoom'
 import PageRooms from './pages/PageRooms'
 import Wrapper from './elements/wrapper'
+import AppContext from './context/application/appContext'
 
 export default function NavRouter() {
   return (
@@ -27,13 +27,13 @@ export default function NavRouter() {
 }
 
 function LayoutProtected() {
-  const { token } = useAppSelector((state) => state.profile)
+  const { token } = useContext(AppContext)
   if (!token) return <Navigate to='/login' replace />
   return <Outlet />
 }
 
 function LayoutNotAuthed() {
-  const { token } = useAppSelector((state) => state.profile)
+  const { token } = useContext(AppContext)
   if (token) return <Navigate to='/' replace />
   return <Outlet />
 }
