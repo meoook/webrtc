@@ -1,38 +1,23 @@
-import { useState } from 'react'
-import InputTextField from '../elements/input-field'
+import { useContext, useState } from 'react'
+import { AppContext } from '../context/application/appContext'
 
 export default function PageLogin() {
-  const [auth, setAuth] = useState({ name: '' })
   const [disabled, setDisabled] = useState(false)
+  const { authNetwork } = useContext(AppContext)
 
-  const handleChange = (name: string, value: string) => setAuth({ ...auth, [name]: value })
-
-  const handleLogin = () => {
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     setDisabled(true)
+    authNetwork(e.currentTarget.name)
   }
 
   return (
     <div className='column center middle max-h'>
       <div className='shadow-box column'>
-        <h1 className='mb-2'>Авторизация</h1>
+        <h1 className='mb-2'>Войти с помощью</h1>
         <hr />
-        <InputTextField
-          name='name'
-          onChange={handleChange}
-          value={auth.name}
-          icon='user'
-          title='Your name'
-          ph='enter your name'
-          outColor='brand'
-          disabled={disabled}
-          autoComplete={true}
-        />
-        <div className='row center justify mt-2'>
-          <div />
-          <button className='btn green' onClick={handleLogin} disabled={disabled || !auth.name}>
-            Login
-          </button>
-        </div>
+        <button className='btn green' name='google' onClick={handleLogin} disabled={disabled}>
+          Google
+        </button>
       </div>
     </div>
   )

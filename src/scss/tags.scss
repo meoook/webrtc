@@ -161,7 +161,6 @@ legend {
 }
 svg {
   fill: currentColor;
-  transition: fill $timer / 6 cubic-bezier(0.4, 0, 0.2, 1) $timer / 2;
   user-select: none;
 }
 img {
@@ -170,7 +169,6 @@ img {
   border-radius: var(--radius);
   object-fit: cover;
   transition: all 0.3s;
-  background-color: rgba(var(--color-primary), 0.8);
 }
 hr {
   height: 2px;

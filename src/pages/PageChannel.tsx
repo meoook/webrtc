@@ -5,7 +5,7 @@ import Room from '../components/room'
 interface PageProfileProps {
   children?: React.ReactNode
 }
-export default function PageRoom(props: PageProfileProps) {
+export default function PageChannel(props: PageProfileProps) {
   const { id } = useParams()
   // const { data: user } = useGetUserQuery()
   // const { data: account } = useGetAccountQuery(user?.account.id, { skip: !user?.account.id })

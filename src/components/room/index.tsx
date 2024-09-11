@@ -26,17 +26,17 @@ const pc_config = {
   ],
 }
 
-const MEDIA_CONSTRAINTS = {
-  audio: true,
-  video: {
-    // deviceId: {exact: myExactCameraOrBustDeviceId},
-    // deviceId: myPreferredCameraDeviceId,
-    frameRate: { ideal: 10, max: 15 },
-    facingMode: true ? 'user' : 'environment', // front/back camera
-    width: {min: 640, ideal: 1280, max: 1920},
-    height: {min: 480, ideal: 720, max: 1080}
-  },
-}
+// const MEDIA_CONSTRAINTS = {
+//   audio: true,
+//   video: {
+//     // deviceId: {exact: myExactCameraOrBustDeviceId},
+//     // deviceId: myPreferredCameraDeviceId,
+//     frameRate: { ideal: 10, max: 15 },
+//     facingMode: true ? 'user' : 'environment', // front/back camera
+//     width: { min: 640, ideal: 1280, max: 1920 },
+//     height: { min: 480, ideal: 720, max: 1080 },
+//   },
+// }
 
 const SOCKET_SERVER_URL = 'http://192.168.1.43:8080'
 
@@ -75,7 +75,7 @@ export default function Room({ room_id }: RoomProps) {
       const pc = new RTCPeerConnection(pc_config)
 
       pc.onicecandidate = (e) => {
-        if (!(socketRef.current && e.candidate)) return
+        if (!socketRef.current || !e.candidate) return
         console.log('onicecandidate')
         socketRef.current.emit('candidate', {
           candidate: e.candidate,
@@ -134,6 +134,7 @@ export default function Room({ room_id }: RoomProps) {
           const localSdp = await pc.createOffer({
             offerToReceiveAudio: true,
             offerToReceiveVideo: true,
+          })
           console.log('create offer success')
           await pc.setLocalDescription(new RTCSessionDescription(localSdp))
           socketRef.current.emit('offer', {
@@ -200,9 +201,8 @@ export default function Room({ room_id }: RoomProps) {
     })
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect()
-      }
+      if (socketRef.current) socketRef.current.disconnect()
+
       users.forEach((user) => {
         if (!pcsRef.current[user.id]) return
         pcsRef.current[user.id].close()

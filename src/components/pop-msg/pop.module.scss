@@ -1,15 +1,12 @@
-$texth: #fff;
-$indent: 8px;
-
 .msg {
   @keyframes msgRunProgress {
     0% {
       width: 0%;
-      background-color: rgba($texth, 0.3);
+      background-color: #fff4;
     }
     100% {
       width: 100%;
-      background-color: rgba($texth, 1);
+      background-color: #fff;
     }
   }
   @keyframes fadeOut {
@@ -33,37 +30,37 @@ $indent: 8px;
   }
   &frame {
     position: fixed;
-    top: $indent * 8;
+    top: 64px;
     right: 0;
     z-index: 5;
-    width: $indent * 50;
+    width: 400px;
   }
   &progress {
     position: absolute;
     bottom: 2px;
-    left: $indent * 1.8;
-    border-radius: $indent / 4;
+    left: 15px;
+    border-radius: 2px;
     width: 0;
-    max-width: $indent * 43;
-    height: $indent / 2;
-    background-color: rgba($texth, 0.9);
+    max-width: 344px;
+    height: 4px;
+    background-color: #fffa;
   }
   &item {
     display: flex;
     align-items: center;
-    min-height: $indent * 8;
+    min-height: 64px;
     position: relative;
-    margin: $indent * 2;
-    padding: $indent $indent $indent/1.5;
+    margin: 16px;
+    padding: 8px 8px 5px;
     color: var(--color-primary);
-    border-radius: $indent;
+    border-radius: 8px;
     & svg {
-      fill: $texth;
+      fill: #fff;
       width: 26px;
       height: 26px;
     }
     & .context {
-      padding: 0 $indent/ 2;
+      padding: 0 4px;
     }
     &.fade {
       animation: fadeOut 3.8s linear forwards;

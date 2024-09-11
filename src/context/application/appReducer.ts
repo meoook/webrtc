@@ -1,34 +1,38 @@
 import { IAppState } from '../../model'
-import {
-  POPUP_MESSAGE_ADD,
-  POPUP_MESSAGE_DELETE,
-  USER_LOADING,
-  USER_TOKEN,
-  USER_SET,
-  USER_LOGOUT,
-} from '../actionTypes'
 
-import { getNextId, nullState } from '../utils'
+import { getNextId } from '../utils'
+
+export enum ActionType {
+  DEFAULT = 'DEFAULT',
+  POPUP_ADD = 'POPUP_ADD',
+  POPUP_DELETE = 'POPUP_DELETE',
+  USER_LOADING = 'USER_LOADING',
+  USER_TOKEN = 'USER_TOKEN',
+  USER_SET = 'USER_SET',
+  USER_LOGOUT = 'USER_LOGOUT',
+  CHANNEL_LIST = 'CHANNEL_LIST',
+}
 
 interface IAction {
-  type: string
+  type: ActionType
   payload?: any
 }
 type HandlerFunction = (state: IAppState, action: IAction) => IAppState
 
-const handlers: Record<string, HandlerFunction> = {
-  [POPUP_MESSAGE_ADD]: (state: IAppState, { payload }: IAction): IAppState => ({
+const handlers: Record<ActionType, HandlerFunction> = {
+  [ActionType.POPUP_ADD]: (state: IAppState, { payload }: IAction): IAppState => ({
     ...state,
     popups: [...state.popups, { id: getNextId(state.popups), ...payload }],
   }),
-  [POPUP_MESSAGE_DELETE]: (state: IAppState, { payload }: IAction): IAppState => ({
+  [ActionType.POPUP_DELETE]: (state: IAppState, { payload }: IAction): IAppState => ({
     ...state,
     popups: state.popups.filter((popups) => popups.id !== payload),
   }),
-  [USER_LOADING]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, loading: payload }),
-  [USER_TOKEN]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, token: payload }),
-  [USER_SET]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, user: payload }),
-  [USER_LOGOUT]: (state: IAppState): IAppState => ({ ...nullState }),
+  [ActionType.USER_LOADING]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, loading: payload }),
+  [ActionType.USER_TOKEN]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, token: payload }),
+  [ActionType.USER_SET]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, user: payload }),
+  [ActionType.USER_LOGOUT]: (state: IAppState): IAppState => ({ ...state, user: undefined, token: undefined }),
+  [ActionType.CHANNEL_LIST]: (state: IAppState, { payload }: IAction): IAppState => ({ ...state, channels: payload }),
   DEFAULT: (state: IAppState): IAppState => state,
 }
 

@@ -1,14 +1,14 @@
 import { createContext } from 'react'
 import { IAppContext } from '../../model'
 
-const AppContext = createContext<IAppContext>({
-  popups: [],
+export const AppContext = createContext<IAppContext>({
   loading: false,
+  popups: [],
+  channels: [],
   addPopup: () => {},
   delPopup: () => {},
-  userLogin: async () => false,
-  userGet: async () => {},
-  userLogout: async () => {},
+  authNetwork: async () => {},
+  authCode: async () => {},
+  authLogout: () => {},
+  channelsGet: () => {},
 })
-
-export default AppContext

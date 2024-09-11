@@ -4,6 +4,7 @@ import { IAppState, IPopup } from '../model'
 export const nullState: IAppState = {
   popups: [],
   loading: false,
+  channels: [],
 }
 
 // FUNCTIONS
@@ -11,54 +12,75 @@ export const getNextId = (arr: IPopup[]) => {
   if (arr.length === 0) return 0
   else return arr[arr.length - 1].id + 1
 }
-export const connectErrMsg = (err: any, msg: string, title?: string) => {
-  if (!err.response) return { text: 'Сервер недоступен', type: 'warning' }
-  console.warn('Err from UserState:', err.response.statusText) // TODO: Обработка ошибок - вывод err.response.data
-  return { text: msg, type: 'warning', title }
+
+export enum ApiErrorCode {
+  CONNECTION_ERROR = 0,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
 }
 
-interface ApiResponse {
-  [key: string]: any
+export class ApiException extends Error {
+  public code: ApiErrorCode = ApiErrorCode.FORBIDDEN
+  public message: string = 'connection error'
+
+  constructor(code?: ApiErrorCode, data?: Record<string, any>) {
+    super()
+    if (code) this.code = code
+    if (data && data.detail) this.message = data.detail
+    else if (data) this.message = JSON.stringify(data)
+  }
+
+  public toString = (): string => `API Error code: ${this.code} ${this.message}`
 }
 
 export class AppApi {
-  #API_URL: string = process.env.REACT_APP_API_URL || 'http://localhost:3030'
-  #token: string
+  static API_URL: string = process.env.REACT_APP_API_URL || 'http://localhost:8000'
 
-  constructor(token?: string) {
-    console.log(`Initialize APP API for ${this.#API_URL}`)
-    this.#token = token || ''
+  static #headers(token?: string): Record<string, string> {
+    if (!token) return { 'Content-Type': 'application/json' }
+    return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
   }
 
-  set token(value: string) {
-    this.#token = value
-  }
-
-  get #headers(): Record<string, string> {
-    const headers = { 'Content-Type': 'application/json' }
-    if (this.#token) return { ...headers, Authorization: `Bearer ${this.#token}` }
-    return headers
-  }
-
-  get = async (path: string, params?: Record<string, any>): Promise<ApiResponse | ApiResponse[]> => {
+  static get = async (path: string, params?: Record<string, any>, token?: string): Promise<any> => {
     const query = new URLSearchParams(params).toString()
-    const url = query ? `${this.#API_URL}/${path}?${query}` : `${this.#API_URL}/${path}`
-    const options = { method: 'POST', headers: this.#headers }
-    const response = await fetch(url, options)
-    if (response.ok) return await response.json()
-    throw new Error(`HTTP error! status: ${response.status}`)
+    const _path = query ? `${path}?${query}` : path
+    const options = { method: 'GET', headers: AppApi.#headers(token) }
+    return await AppApi.#request(_path, options)
   }
 
-  post = async (path: string, data: Record<string, any>): Promise<any> => {
-    const options = { method: 'POST', headers: this.#headers, body: JSON.stringify(data) }
-    const response = await fetch(`${this.#API_URL}/${path}`, options)
-    if (response.ok) return await response.json()
-    throw new Error(`HTTP error! status: ${response.status}`)
+  static post = async (path: string, data: Record<string, any>, token?: string): Promise<any> => {
+    const options = { method: 'POST', headers: AppApi.#headers(token), body: JSON.stringify(data) }
+    return await AppApi.#request(path, options)
   }
 
-  delete = async (path: string): Promise<void> => {
-    const options = { method: 'DELETE', headers: this.#headers }
-    const response = await fetch(`${this.#API_URL}/${path}`, options)
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+  static delete = async (path: string, token?: string): Promise<any> => {
+    const options = { method: 'DELETE', headers: AppApi.#headers(token) }
+    return await AppApi.#request(path, options)
+  }
+
+  static #request = async (path: string, options: Record<string, any>) => {
+    let response: Response
+    try {
+      response = await fetch(`${AppApi.API_URL}/${path}`, options)
+      if (response.ok) return await AppApi.#handle(response)
+    } catch (_) {
+      throw new ApiException()
+    }
+    try {
+      const data: Record<string, any> = await response.json()
+      throw new ApiException(response.status, data)
+    } catch (_) {
+      throw new ApiException(response.status)
+    }
+  }
+
+  static #handle = async (response: Response): Promise<Record<string, any> | undefined> => {
+    try {
+      return await response.json()
+    } catch {
+      return
+    }
   }
 }

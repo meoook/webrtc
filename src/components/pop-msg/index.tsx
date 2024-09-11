@@ -1,34 +1,32 @@
 import style from './pop.module.scss'
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { removeMessage } from '../../store/profile.slice'
+import { useContext, useEffect } from 'react'
+import { AppContext } from '../../context/application/appContext'
 import { IPopup } from '../../model'
 import Icon from '../../elements/ico-get'
 
 export default function PopupMsgs() {
-  const { messages } = useAppSelector((state) => state.profile)
+  const { popups, delPopup } = useContext(AppContext)
 
   return (
     <div className={style.msgframe}>
-      {messages.map((message) => (
-        <Message msg={message} key={message.id} />
+      {popups.map((popup) => (
+        <Popup popup={popup} key={popup.id} delPopup={delPopup} />
       ))}
     </div>
   )
 }
 
-const Message = ({ msg }: { msg: IPopup }) => {
-  const msgStyle = `${style.msgitem} ${style[msg.type]}${msg.nofade ? '' : ` ${style.fade}`}`
-  const dispatch = useAppDispatch()
+const Popup = ({ popup, delPopup }: { popup: IPopup; delPopup: (id: number) => void }) => {
+  const msgStyle = `${style.msgitem} ${style[popup.type]}${popup.nofade ? '' : ` ${style.fade}`}`
 
   const delMsg = (messageID: number) => {
-    dispatch(removeMessage(messageID))
+    delPopup(messageID)
   }
 
   useEffect(() => {
-    if (!msg.nofade) {
+    if (!popup.nofade) {
       setTimeout(() => {
-        delMsg(msg.id)
+        delMsg(popup.id)
       }, 4000)
     }
     // eslint-disable-next-line
@@ -37,12 +35,12 @@ const Message = ({ msg }: { msg: IPopup }) => {
   return (
     <div className={msgStyle}>
       <div className='row center'>
-        <Icon name={msg.type} />
+        <Icon name={popup.type} />
         <div className={style.context}>
-          {msg.title && <h3>{msg.title} </h3>}
-          {msg.text && <div>{msg.text}</div>}
+          {popup.title && <h3>{popup.title} </h3>}
+          {popup.text && <div>{popup.text}</div>}
         </div>
-        <button className='btn-close' onClick={delMsg.bind(this, msg.id)}>
+        <button className='btn-close' onClick={delMsg.bind(this, popup.id)}>
           &times;
         </button>
       </div>

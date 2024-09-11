@@ -1,11 +1,14 @@
 import { useContext, useEffect } from 'react'
 import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom'
+import { AppContext } from './context/application/appContext'
 import PageHome from './pages/PageHome'
 import PageLogin from './pages/PageLogin'
-import PageRoom from './pages/PageRoom'
-import PageRooms from './pages/PageRooms'
+import PageChannel from './pages/PageChannel'
+import PageChannels from './pages/PageChannels'
 import Wrapper from './elements/wrapper'
-import AppContext from './context/application/appContext'
+import PageProfile from './pages/PageProfile'
+import PageWallet from './pages/PageWallet'
+import PageCreate from './pages/PageCreate'
 
 export default function NavRouter() {
   return (
@@ -13,12 +16,15 @@ export default function NavRouter() {
       <ScrollToTop />
       <Routes>
         <Route element={<LayoutProtected />}>
-          <Route path='/rooms' element={<PageRooms />} />
-          <Route path='/rooms/:id' element={<PageRoom />} />
+          <Route path='/profile' element={<PageProfile />} />
+          <Route path='/wallet' element={<PageWallet />} />
+          <Route path='/create' element={<PageCreate />} />
         </Route>
         <Route element={<LayoutNotAuthed />}>
           <Route path='/login' element={<PageLogin />} />
         </Route>
+        <Route path='/channels' element={<PageChannels />} />
+        <Route path='/channels/:id' element={<PageChannel />} />
         <Route path='/' element={<PageHome />} />
         <Route path='*' element={<Page404 />} />
       </Routes>

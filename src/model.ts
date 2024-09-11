@@ -14,15 +14,30 @@ export interface ListResponse<T> {
   data: T[]
 }
 
-export interface IUserCredentials {
-  username: string
-  password: string
-}
-
 export interface IApiUser {
   username: string
   email: string
-  channel: string
+  avatar: string
+  balance: string
+  banned_till: string | null
+  country: string | null
+  language: string | null
+  telegram_id: string
+  channel: string | null
+}
+
+export interface IApiChannel {
+  id: number
+  owner: string
+  tags: string[]
+  subscribers: number
+  name: string
+  title: string
+  description: string
+  image: string | null
+  is_online: boolean
+  is_censored: boolean
+  start_in: string | null
 }
 
 export type WebRTCUser = {
@@ -32,8 +47,9 @@ export type WebRTCUser = {
 }
 
 export interface IAppState {
-  popups: IPopup[]
   loading: boolean
+  popups: IPopup[]
+  channels: IApiChannel[]
   token?: string
   user?: IApiUser
 }
@@ -41,7 +57,8 @@ export interface IAppState {
 export interface IAppContext extends IAppState {
   addPopup: (popup: IPopupOptions) => void
   delPopup: (id: number) => void
-  userLogin: (credentials: IUserCredentials) => Promise<boolean>
-  userGet: () => Promise<void>
-  userLogout: () => Promise<void>
+  authNetwork: (network: string) => Promise<void>
+  authCode: (state: string, code: string) => Promise<void>
+  authLogout: () => void
+  channelsGet: () => void
 }

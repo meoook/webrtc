@@ -1,5 +1,5 @@
-import { useContext } from 'react'
 import style from './modal.module.scss'
+import { useContext } from 'react'
 import { ModalContext } from '../../context/ModalContext'
 
 interface ModalProps {
