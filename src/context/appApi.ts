@@ -1,18 +1,3 @@
-import { IAppState, IPopup } from '../model'
-
-// CONSTANTS
-export const nullState: IAppState = {
-  popups: [],
-  loading: false,
-  channels: [],
-}
-
-// FUNCTIONS
-export const getNextId = (arr: IPopup[]) => {
-  if (arr.length === 0) return 0
-  else return arr[arr.length - 1].id + 1
-}
-
 export enum ApiErrorCode {
   CONNECTION_ERROR = 0,
   BAD_REQUEST = 400,

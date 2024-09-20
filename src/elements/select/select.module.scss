@@ -1,0 +1,29 @@
+.select {
+  background-image: url('../../svg/select.svg');
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 20px;
+
+  display: block !important;
+  border-radius: 5px !important;
+  padding: 5px 30px 5px 10px !important;
+  width: 100% !important;
+  height: var(--input-size);
+  cursor: pointer;
+  line-height: 1;
+  font-size: var(--font-size);
+  font-family: inherit;
+  appearance: none;
+  background-clip: padding-box;
+  transition: box-shadow 0.3s ease-in;
+  border: 0px solid transparent;
+  color: var(--color-primary);
+  background-color: var(--color-input);
+  box-shadow: 0 0 2px var(--color-border);
+  &:hover {
+    box-shadow: 0 0 2px var(--color-border), 0 0 2px var(--color-border);
+  }
+  &:focus {
+    box-shadow: 0 0 2px var(--color-msg-default);
+  }
+}

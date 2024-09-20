@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AppContext } from '../context/application/appContext'
-import Banner from '../components/banner'
 import Container from '../elements/container'
+import Section from '../components/section'
 
 export default function PageHome() {
   const { authCode, channelsGet, channels } = useContext(AppContext)
@@ -20,8 +20,6 @@ export default function PageHome() {
   }, [])
 
   return (
-    <Container>
-      <Banner title='Stream rulet' subtitle='Watch online streams for your favorite bloger' />
-    </Container>
+    <Container>{channels ? <Section title='Directory' channels={channels} /> : <div>Loading channels</div>}</Container>
   )
 }

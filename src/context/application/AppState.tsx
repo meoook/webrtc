@@ -2,10 +2,18 @@ import { useCallback, useEffect, useReducer } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from './appContext'
 import { appReducer, ActionType } from './appReducer'
-import { ApiErrorCode, ApiException, AppApi, nullState } from '../utils'
+import { ApiErrorCode, ApiException, AppApi } from '../appApi'
 import { IAppState, IPopupOptions } from '../../model'
 
 // const WS_URL: string = process.env.REACT_APP_WS_URL || 'ws://localhost:8080'
+
+const nullState: IAppState = {
+  loading: false,
+  popups: [],
+  countries: [],
+  languages: [],
+  channels: [],
+}
 
 function createInitialState(baseState: IAppState): IAppState {
   return { ...baseState, token: localStorage.getItem('token') || undefined }
@@ -73,6 +81,27 @@ const AppState = ({ children }: { children: React.ReactNode }) => {
   const delPopup = (id: number) => dispatch({ type: ActionType.POPUP_DELETE, payload: id })
   const loading = (loadState: boolean) => dispatch({ type: ActionType.USER_LOADING, payload: loadState })
 
+  // DICTS
+  const countriesGet = useCallback(async () => {
+    await AppApi.get('country', undefined)
+      .then((response) => {
+        dispatch({ type: ActionType.COUNTRIES_LIST, payload: response })
+      })
+      .catch((err: ApiException) => {
+        addPopup({ type: 'error', title: 'Server error', text: `failed to get countries - ${err.message}` })
+      })
+  }, [])
+
+  const languagesGet = useCallback(async () => {
+    await AppApi.get('language', undefined)
+      .then((response) => {
+        dispatch({ type: ActionType.LANGUAGES_LIST, payload: response })
+      })
+      .catch((err: ApiException) => {
+        addPopup({ type: 'error', title: 'Server error', text: `failed to get languages - ${err.message}` })
+      })
+  }, [])
+
   // AUTH
   const authNetwork = async (network: string): Promise<void> => {
     AppApi.get('auth', { network })
@@ -136,12 +165,17 @@ const AppState = ({ children }: { children: React.ReactNode }) => {
   const channelsGet = (): void => {
     AppApi.get('channel', undefined, state.token)
       .then((response) => {
-        dispatch({ type: ActionType.CHANNEL_LIST, payload: response.token })
+        dispatch({ type: ActionType.CHANNEL_LIST, payload: response })
       })
       .catch((_) => {
         addPopup({ type: 'error', title: 'Server error', text: 'failed to get channels' })
       })
   }
+
+  useEffect(() => {
+    countriesGet()
+    languagesGet()
+  }, [countriesGet, languagesGet])
 
   useEffect(() => {
     if (state.token) userGet()
@@ -152,6 +186,8 @@ const AppState = ({ children }: { children: React.ReactNode }) => {
       value={{
         loading: state.loading,
         popups: state.popups,
+        countries: state.countries,
+        languages: state.languages,
         channels: state.channels,
         token: state.token,
         user: state.user,

@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <BrowserRouter>
     <AppState>
-      <Header />
-      <PopupMsgs />
       <ModalState>
+        <Header />
+        <PopupMsgs />
         <NavRouter />
       </ModalState>
     </AppState>

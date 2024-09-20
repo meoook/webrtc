@@ -14,6 +14,16 @@ export interface ListResponse<T> {
   data: T[]
 }
 
+export interface ICountry {
+  code: string
+  name: string
+}
+
+export interface ILanguage {
+  code: string
+  name: string
+}
+
 export interface IApiUser {
   username: string
   email: string
@@ -29,8 +39,10 @@ export interface IApiUser {
 export interface IApiChannel {
   id: number
   owner: string
+  avatar: string
   tags: string[]
   subscribers: number
+  viewers: number
   name: string
   title: string
   description: string
@@ -49,6 +61,8 @@ export type WebRTCUser = {
 export interface IAppState {
   loading: boolean
   popups: IPopup[]
+  countries: ICountry[]
+  languages: ILanguage[]
   channels: IApiChannel[]
   token?: string
   user?: IApiUser

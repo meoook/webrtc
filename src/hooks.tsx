@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function useClickOutside(): [React.RefObject<HTMLDivElement>, boolean, React.MouseEventHandler] {
+export const useClickOutside = (): [React.RefObject<HTMLDivElement>, boolean, React.MouseEventHandler] => {
   const ref = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState<boolean>(false)
 
@@ -17,4 +17,25 @@ export function useClickOutside(): [React.RefObject<HTMLDivElement>, boolean, Re
   const toggle = () => setOpen((prev) => !prev)
 
   return [ref, open, toggle]
+}
+
+interface IScreenSize {
+  width: number
+  height: number
+}
+
+export const useScreenSize = () => {
+  const [size, setSize] = useState<IScreenSize>({ width: window.innerWidth, height: window.innerHeight })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight })
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  return size
 }

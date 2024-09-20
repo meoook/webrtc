@@ -1,4 +1,13 @@
 :root {
+  // --color-hinted-grey-1: #0e0e10;
+  // --color-hinted-grey-2: #18181b;
+  // --color-hinted-grey-3: #1f1f23;
+  // --color-hinted-grey-4: #26262c;
+  // --color-hinted-grey-5: #323239;
+  // --color-hinted-grey-6: #3b3b44;
+  // --color-hinted-grey-7: #53535f;
+  // --color-hinted-grey-8: #848494;
+
   // new colors
   // --colors-white: #fff;
   // --colors-failure: #ed4b9e;
@@ -58,7 +67,7 @@
   --color-input: #282831;
   --color-active: #2c2c35;
 
-  --color-shadow: #2222;
+  --color-shadow: #0009;
   --color-border: #434a56; // #464e5a
   --color-disabled: #505059;
 
@@ -79,6 +88,8 @@
   --base-size-8: 8px;
   --base-size-16: 16px;
   --size-checkbox: 24px;
+
+  --input-size: 30px;
   // Other
   --text-weight: 600;
   --timer: 0.9s;
@@ -149,15 +160,11 @@ $res-xl: 1200px;
 }
 
 %disabled-cfg {
-  // cursor: initial !important;
-  pointer-events: none;
+  // pointer-events: none;
   cursor: not-allowed !important;
   transform: none !important;
   color: var(--color-secondary) !important;
   background-color: transparent !important;
-  // & svg {
-  //   fill: var(--color-secondary) !important;
-  // }
 }
 %disabled-bg {
   background-size: 100px 100px !important;

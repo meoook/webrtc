@@ -1,0 +1,26 @@
+.notify {
+  box-sizing: border-box;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid;
+  border-radius: 4px;
+  margin: 0.2rem 0;
+}
+
+.info {
+  border-color: var(--color-border);
+  background-color: var(--color-active);
+  color: var(--color-secondary);
+}
+
+.warning {
+  border-color: var(--color-msg-warning);
+  background-color: hsl(40, 20%, 10%);
+  // color: var(--color-msg-warning);
+  color: hsl(40, 80%, 60%);
+}
+
+.error {
+  border-color: var(--color-msg-error);
+  background-color: hsl(0, 100%, 10%);
+  color: var(--color-msg-error);
+}

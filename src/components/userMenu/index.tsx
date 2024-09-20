@@ -1,14 +1,16 @@
 import style from './user.module.scss'
-import { useContext } from 'react'
-import { AppContext } from '../../context/application/appContext'
 import { Link } from 'react-router-dom'
-import iconArray from '../../elements/ico-get/icons'
-import { IApiUser } from '../../model'
+import { useContext } from 'react'
 import { useClickOutside } from '../../hooks'
+import { AppContext } from '../../context/application/appContext'
+import { ModalContext } from '../../context/ModalContext'
+import { IApiUser } from '../../model'
+import iconArray from '../../elements/ico-get/icons'
+import ModalProfile from '../../modals/profile'
 
 export default function UserMenu({ user }: { user: IApiUser }) {
   const { authLogout } = useContext(AppContext)
-  const [menuRef, open, toogle] = useClickOutside()
+  const [menuRef, isMenuOpen, menuToogle] = useClickOutside()
   const [notifyRef, isNotifyOpen, notifyToogle] = useClickOutside()
 
   return (
@@ -27,10 +29,10 @@ export default function UserMenu({ user }: { user: IApiUser }) {
         )}
       </div>
       <div ref={menuRef} className={style.wrapper}>
-        <button className={style.toogler} onClick={toogle}>
+        <button className={style.toogler} onClick={menuToogle}>
           <img src={user.avatar} alt='ava' />
         </button>
-        {open && (
+        {isMenuOpen && (
           <div className={style.dropdown}>
             <div className={style.head}>
               <div className={style.avatar}>
@@ -39,10 +41,11 @@ export default function UserMenu({ user }: { user: IApiUser }) {
               <div>{user.username}</div>
             </div>
             <div className={style.section}>
-              <Link to='/profile' className={style.item}>
+              {/* <Link to='/profile' className={style.item}>
                 {iconArray.user}
                 Profile
-              </Link>
+              </Link> */}
+              <ProfileButton />
               <Link to={user.channel ? `/${user.channel}` : '/create'} className={style.item}>
                 {iconArray.channels}
                 {user.channel ? 'My channel' : 'Create channel'}
@@ -77,5 +80,19 @@ export default function UserMenu({ user }: { user: IApiUser }) {
         )}
       </div>
     </div>
+  )
+}
+
+const ProfileButton = () => {
+  const { modal, open } = useContext(ModalContext)
+
+  return (
+    <>
+      {modal && <ModalProfile />}
+      <button className={style.item} onClick={open}>
+        {iconArray.user}
+        Profile
+      </button>
+    </>
   )
 }

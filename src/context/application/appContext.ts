@@ -4,6 +4,8 @@ import { IAppContext } from '../../model'
 export const AppContext = createContext<IAppContext>({
   loading: false,
   popups: [],
+  countries: [],
+  languages: [],
   channels: [],
   addPopup: () => {},
   delPopup: () => {},
